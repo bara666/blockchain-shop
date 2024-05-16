@@ -1,19 +1,51 @@
-<mat-card class="mat-elevation-z4">
+
+
+<mat-card class="mat-elevation-z4" *ngIf="productComplet; else loading">
   <mat-card-header>
     <!-- <div mat-card-avatar class="example-header-image"></div> -->
-    <mat-card-title>{{product}} - Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <mat-card-title>{{productComplet.id}} - {{productComplet.name | titlecase}}</mat-card-title>
+    <mat-card-subtitle>{{productComplet.category | titlecase}} </mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://lorempokemon.fakerapi.it/pokemon/500/734?{{product}}" alt="Photo of a Shiba Inu">
+  <img mat-card-lg-image src="{{productComplet.image}}">
   <mat-card-content>
     <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
+      {{ (productComplet.description.length>100)? (productComplet.description | slice:0:100)+'...':(productComplet.description) }}
     </p>
   </mat-card-content>
   <mat-card-actions>
     <!-- <button mat-button>LIKE</button> -->
-    <button mat-flat-button color="primary">Buy by 40 MONEDOS</button>
+    <button mat-flat-button color="primary"><span></span>40 MONEDOS</button>
+    <span class="action-spacer"></span>
+    <ngx-avatars [matMenuTriggerFor]="userMenu" [src]="productComplet.vendor.image" [alt]="productComplet.vendor.name" [title]="productComplet.vendor.name"></ngx-avatars>
+    <mat-menu #userMenu="matMenu">
+      <mat-card>
+        <mat-card-header>
+          <img mat-card-avatar class="example-header-image" [src]="productComplet.vendor.image"/>
+          <mat-card-title>{{productComplet.vendor.name}}</mat-card-title>
+          <mat-card-subtitle>{{productComplet.vendor.wallet}}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+
+    </mat-menu>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #loading>
+  <mat-card class="mat-elevation-z4 loading">
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-lg-image src="./assets/pokemongo.gif">
+    <mat-card-content>
+      <p>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- <button mat-button>LIKE</button> -->
+      <button mat-flat-button color="primary"><span>...</span></button>
+
+    </mat-card-actions>
+  </mat-card>
+</ng-template>

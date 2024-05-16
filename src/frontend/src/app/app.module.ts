@@ -7,8 +7,9 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientModule } from '@angular/common/http';
 import { ToolbarModule } from './toolbar/toolbar.module';
-
-
+import { ProductsService } from './services/products.service';
+import { PokemonClient } from 'pokenode-ts';
+import { Vendor, VendorsService } from './services/vendors.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,10 @@ import { ToolbarModule } from './toolbar/toolbar.module';
     ToolbarModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    ProductsService,
+    VendorsService,
+    PokemonClient
   ],
   bootstrap: [AppComponent]
 })
