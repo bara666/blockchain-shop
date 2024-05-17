@@ -16,17 +16,7 @@
     <!-- <button mat-button>LIKE</button> -->
     <button mat-flat-button color="primary"><span></span>40 MONEDOS</button>
     <span class="action-spacer"></span>
-    <ngx-avatars [matMenuTriggerFor]="userMenu" [src]="productComplet.vendor.image" [alt]="productComplet.vendor.name" [title]="productComplet.vendor.name"></ngx-avatars>
-    <mat-menu #userMenu="matMenu">
-      <mat-card>
-        <mat-card-header>
-          <img mat-card-avatar class="example-header-image" [src]="productComplet.vendor.image"/>
-          <mat-card-title>{{productComplet.vendor.name}}</mat-card-title>
-          <mat-card-subtitle>{{productComplet.vendor.wallet}}</mat-card-subtitle>
-        </mat-card-header>
-      </mat-card>
-
-    </mat-menu>
+    <vendor-avatar [vendor]="productComplet.vendor"></vendor-avatar>
   </mat-card-actions>
 </mat-card>
 

@@ -11,9 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { AvatarModule } from 'ngx-avatars';
-
 import { PokemonClient } from 'pokenode-ts';
+import { VendorsModule } from '../vendors/vendors.module';
 @NgModule({
   declarations: [
     ProductsListComponent,
@@ -29,7 +28,7 @@ import { PokemonClient } from 'pokenode-ts';
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
-    AvatarModule
+    VendorsModule
   ],
   providers: [PokemonClient]
 })

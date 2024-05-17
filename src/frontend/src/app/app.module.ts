@@ -13,7 +13,7 @@ import { Vendor, VendorsService } from './services/vendors.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
