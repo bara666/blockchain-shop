@@ -22,7 +22,8 @@ then
     do
         sleep 60
         echo "Sync node 4000"
-        /app/main startnode
+        /app/main startnode &
+        sleep 2
         startnode_pid=$!
         kill $startnode_pid
     done
