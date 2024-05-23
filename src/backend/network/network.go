@@ -119,7 +119,6 @@ func SendBlock(addr string, b *blockchain.Block) {
 
 func SendData(addr string, data []byte) {
 	conn, err := net.Dial(protocol, addr)
-
 	if err != nil {
 		fmt.Printf("%s is not available\n", addr)
 		var updatedNodes []string
@@ -324,7 +323,7 @@ func HandleTx(request []byte, chain *blockchain.BlockChain) {
 	tx := blockchain.DeserializeTransaction(txData)
 	memoryPool[hex.EncodeToString(tx.ID)] = tx
 
-	fmt.Printf("%s, %d", nodeAddress, len(memoryPool))
+	fmt.Printf("%s, %d\n", nodeAddress, len(memoryPool))
 
 	if nodeAddress == KnownNodes[0] {
 		for _, node := range KnownNodes {
@@ -333,8 +332,8 @@ func HandleTx(request []byte, chain *blockchain.BlockChain) {
 			}
 		}
 	} else {
-		if len(memoryPool) >= 2 && len(mineAddress) > 0 {
-			fmt.Printf("Starting to mine...")
+		if len(memoryPool) >= 0 && len(mineAddress) > 0 {
+			fmt.Printf("Starting to mine...\n")
 			MineTx(chain)
 		}
 	}
@@ -409,7 +408,7 @@ func HandleVersion(request []byte, chain *blockchain.BlockChain) {
 func HandleConnection(conn net.Conn, chain *blockchain.BlockChain) {
 	req, err := ioutil.ReadAll(conn)
 	defer conn.Close()
-	
+
 	if err != nil {
 		log.Panic(err)
 	}
