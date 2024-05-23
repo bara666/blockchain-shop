@@ -83,7 +83,7 @@ func getBalance(c echo.Context) error {
 		b += out.Value
 	}
 
-	log.Infof("Balance of %s: %d\n", balance.Address, b)
+	log.Infof("Balance of %s: %d", balance.Address, b)
 	return c.JSON(http.StatusOK, b)
 }
 
@@ -134,7 +134,6 @@ func send(c echo.Context) error {
 			network.SendTx(network.KnownNodes[0], tx)
 			log.Info("send tx")
 		}
-		//network.StartServer(nodeID, "")
 		log.Info("Success!")
 		return c.JSON(http.StatusOK, "Success!")
 	}
