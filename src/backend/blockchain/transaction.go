@@ -55,15 +55,17 @@ func DeserializeTransaction(data []byte) Transaction {
 }
 
 func CoinbaseTx(to, data string) *Transaction {
+	reward := 2000
 	if data == "" {
 		randData := make([]byte, 24)
 		_, err := rand.Read(randData)
 		Handle(err)
 		data = fmt.Sprintf("%x", randData)
+		reward = 20
 	}
 
 	txin := TxInput{[]byte{}, -1, nil, []byte(data)}
-	txout := NewTXOutput(20, to)
+	txout := NewTXOutput(reward, to)
 
 	tx := Transaction{nil, []TxInput{txin}, []TxOutput{*txout}}
 	tx.ID = tx.Hash()
