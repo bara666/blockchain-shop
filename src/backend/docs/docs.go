@@ -112,7 +112,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "mineNow": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": false
                 },
                 "to": {
                     "type": "string"

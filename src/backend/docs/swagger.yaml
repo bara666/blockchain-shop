@@ -12,6 +12,7 @@ definitions:
       from:
         type: string
       mineNow:
+        default: false
         type: boolean
       to:
         type: string

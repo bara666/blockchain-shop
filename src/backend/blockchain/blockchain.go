@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-
+	"time"
 	"github.com/dgraph-io/badger"
 )
 
@@ -325,6 +325,9 @@ func retry(dir string, originalOpts badger.Options) (*badger.DB, error) {
 	retryOpts := originalOpts
 	retryOpts.Truncate = true
 	db, err := badger.Open(retryOpts)
+	if err != nil {
+		log.Println("Error retrying DB: ", err)
+	}
 	return db, err
 }
 
@@ -336,6 +339,21 @@ func openDB(dir string, opts badger.Options) (*badger.DB, error) {
 				return db, nil
 			}
 			log.Println("could not unlock database:", err)
+		}
+		time.Sleep(2 * time.Second)
+		log.Println("Error opening DB: ", err)
+		log.Println("Retrying open DB...")
+		if db, err := badger.Open(opts); err != nil {
+			if strings.Contains(err.Error(), "LOCK") {
+				if db, err := retry(dir, opts); err == nil {
+					log.Println("database unlocked, value log truncated")
+					return db, nil
+				}
+				log.Println("could not unlock database:", err)
+			}
+			return nil, err
+		} else {
+			return db, nil
 		}
 		return nil, err
 	} else {

@@ -110,7 +110,7 @@ spec:
             name: start-blockchain-node
       - name: blockchain-backend-6000
         image: blockchain-backend:0.1
-        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 6000 && /app/main startnode"]
+        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 6000"]
         env:
           - name: NODE_ID
             value: "6000"
@@ -131,7 +131,7 @@ spec:
             name: start-blockchain-node
       - name: blockchain-backend-7000
         image: blockchain-backend:0.1
-        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 7000 && /app/main startnode"]
+        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 7000"]
         env:
           - name: NODE_ID
             value: "7000"
@@ -144,6 +144,27 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 7000
+        volumeMounts:
+          - mountPath: /app/tmp
+            name: data
+          - mountPath: /tmp/start-blockchain-node.sh
+            subPath: start-blockchain-node.sh
+            name: start-blockchain-node
+      - name: blockchain-backend-8000
+        image: blockchain-backend:0.1
+        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 8000"]
+        env:
+          - name: NODE_ID
+            value: "8000"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 8000
         volumeMounts:
           - mountPath: /app/tmp
             name: data

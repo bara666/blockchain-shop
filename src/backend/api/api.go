@@ -16,6 +16,8 @@ import(
 	"blockchain.com/network"
 	"net/http"
 	"github.com/labstack/echo/v4"
+	"os"
+	"strings"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -112,6 +114,17 @@ func send(c echo.Context) error {
 		log.Error("From address is not Valid")
 		return c.JSON(http.StatusBadRequest, "From address is not Valid")
 	}
+	b, err := os.ReadFile("/app/tmp/" + sendTransaction.From) // just pass the file name
+	if err != nil {
+		log.Errorf("Unable to read file /app/tmp/%s with error: %s", sendTransaction.From, err)
+	}
+
+	//fmt.Println(b) //print the content as 'bytes'
+
+	str := string(b) //convert content to a 'string'
+	str = strings.TrimRight(str, "\n") //remove last return
+	log.Info("NodeID obtained from wallet origin transaction: ", str) //print the content as a 'string'
+	nodeID = str
 	chain := blockchain.ContinueBlockChain(nodeID)
 	UTXOSet := blockchain.UTXOSet{chain}
 	defer chain.Database.Close()
