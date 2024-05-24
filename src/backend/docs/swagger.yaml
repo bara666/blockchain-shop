@@ -47,6 +47,17 @@ paths:
         "400":
           description: Bad request
       summary: Obtain balance of a wallet
+  /getwallets:
+    get:
+      description: Obtain all wallets available and node number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+        "400":
+          description: Bad request
+      summary: Obtain all wallets available and node number
   /health:
     get:
       description: check health about the service to monitor status

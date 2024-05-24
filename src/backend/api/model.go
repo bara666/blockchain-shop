@@ -4,6 +4,11 @@ type Balance struct {
 	Address   string
 }
 
+type Wallet struct {
+	Address   string
+	Node      string
+}
+
 type SendTransaction struct {
 	From      string
 	To        string

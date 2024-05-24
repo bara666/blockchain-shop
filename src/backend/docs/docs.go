@@ -50,6 +50,23 @@ const docTemplate = `{
                 }
             }
         },
+        "/getwallets": {
+            "get": {
+                "description": "Obtain all wallets available and node number",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Obtain all wallets available and node number",
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "check health about the service to monitor status",

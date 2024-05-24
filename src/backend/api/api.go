@@ -18,6 +18,7 @@ import(
 	"github.com/labstack/echo/v4"
 	"os"
 	"strings"
+	"io/ioutil"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -87,6 +88,40 @@ func getBalance(c echo.Context) error {
 
 	log.Infof("Balance of %s: %d", balance.Address, b)
 	return c.JSON(http.StatusOK, b)
+}
+
+// getWallets
+//
+//@Summary        Obtain all wallets available and node number
+//@Description    Obtain all wallets available and node number
+//Tags            blockchain
+//@Produce        json
+//@Success        200  "ok"
+//@Failure        400  "Bad request"
+//@Router         /getwallets [get]
+func getWallets(c echo.Context) error {
+	var wallet Wallet
+	var wallets []Wallet
+
+	files, err := ioutil.ReadDir("/app/tmp/wallets/")
+	if err != nil {
+		log.Error("Error reading directory with wallets: ", err)
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	for _, file := range files {
+		b, err := os.ReadFile("/app/tmp/wallets/" + file.Name())
+		if err != nil {
+			log.Errorf("Unable to read file /app/tmp/wallets/%s with error: %s", file.Name(), err)
+		}
+		str := string(b) //convert content to a 'string'
+		str = strings.TrimRight(str, "\n") //remove last return
+		log.Infof("Wallet -> %s associated to NodeID -> %s.", str, file.Name()) //print the content as a 'string'
+		wallet.Address = str
+		wallet.Node = file.Name()
+		wallets = append(wallets, wallet)
+	}
+
+	return c.JSON(http.StatusOK, wallets)
 }
 
 // sendTransaction
