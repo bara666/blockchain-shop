@@ -4,6 +4,7 @@ import { VendorAvatarComponent } from './vendor-avatar/vendor-avatar.component';
 import { AvatarModule } from 'ngx-avatars';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -14,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
   imports: [
     MatCardModule,
     MatMenuModule,
+    MatIconModule,
     AvatarModule,
     CommonModule
   ],

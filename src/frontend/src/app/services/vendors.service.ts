@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, forkJoin, map, of } from 'rxjs';
+import { BlockchainService } from './blockchain.service';
 
 export class Vendor {
   public id: number = 0;
@@ -12,22 +14,32 @@ export class Vendor {
 })
 export class VendorsService {
 
+  private vendorsAlmacen: any[] = [];
   public vendors: Map<number, Vendor> = new Map<number, Vendor>();
 
-  constructor() {
-    let vendorsAlmacen: any[] = [
-      { id: 1, name: "Jon Snow", image: "https://thronesapi.com/assets/images/jon-snow.jpg", wallet: "0x1234567890" },
-      { id: 2, name: "Daenerys Targaryen", image: "https://thronesapi.com/assets/images/daenerys.jpg", wallet: "0x1234567890" },
-      { id: 3, name: "Arya Stark", image: "https://thronesapi.com/assets/images/arya-stark.jpg", wallet: "0x1234567890" },
-      { id: 4, name: "Sansa Stark", image: "https://thronesapi.com/assets/images/sansa-stark.jpeg", wallet: "0x1234567890" },
-      { id: 5, name: "Brandon Stark", image: "https://thronesapi.com/assets/images/bran-stark.jpg", wallet: "0x1234567890" },
-      { id: 6, name: "Ned Stark", image: "https://thronesapi.com/assets/images/ned-stark.jpg", wallet: "0x1234567890" },
-      { id: 7, name: "Robert Baratheon", image: "https://thronesapi.com/assets/images/robert-baratheon.jpeg", wallet: "0x123456789" },
-      { id: 8, name: "Jamie Lannister", image: "https://thronesapi.com/assets/images/jaime-lannister.jpg", wallet: "0x123456789" },
-      { id: 9, name: "Cersei Lannister", image: "https://thronesapi.com/assets/images/cersei.jpg", wallet: "0x123456789" },
-      { id: 10, name: "Cateyln Stark", image: "https://thronesapi.com/assets/images/catelyn-stark.jpg", wallet: "0x123456789" },
+  constructor(private blockchainService: BlockchainService) {
+    this.vendorsAlmacen = [
+      { id: 1, name: "Jon Snow", image: "https://thronesapi.com/assets/images/jon-snow.jpg", wallet: null },
+      { id: 2, name: "Daenerys Targaryen", image: "https://thronesapi.com/assets/images/daenerys.jpg", wallet: null },
+      { id: 3, name: "Arya Stark", image: "https://thronesapi.com/assets/images/arya-stark.jpg", wallet: null },
+      { id: 4, name: "Sansa Stark", image: "https://thronesapi.com/assets/images/sansa-stark.jpeg", wallet: null },
+      { id: 5, name: "Brandon Stark", image: "https://thronesapi.com/assets/images/bran-stark.jpg", wallet: null },
+      { id: 6, name: "Ned Stark", image: "https://thronesapi.com/assets/images/ned-stark.jpg", wallet: null },
+      { id: 7, name: "Robert Baratheon", image: "https://thronesapi.com/assets/images/robert-baratheon.jpeg", wallet: null },
+      { id: 8, name: "Jamie Lannister", image: "https://thronesapi.com/assets/images/jaime-lannister.jpg", wallet: null },
+      { id: 9, name: "Cersei Lannister", image: "https://thronesapi.com/assets/images/cersei.jpg", wallet: null },
+      { id: 10, name: "Cateyln Stark", image: "https://thronesapi.com/assets/images/catelyn-stark.jpg", wallet: null },
     ];
-    this.vendors = new Map<number, Vendor>(Array.from(vendorsAlmacen).map((value) => [value.id, value]));
+
+    blockchainService.wallets$
+      .subscribe(wallets => {
+        this.vendorsAlmacen.map(vendor => {
+          const randomIndex = Math.floor(Math.random() * wallets.length);
+          vendor.wallet = wallets[randomIndex].Address;
+        });
+        this.vendors = new Map<number, Vendor>(Array.from(this.vendorsAlmacen).map((value) => [value.id, value]));
+      })
+    this.blockchainService.getWallets();
   }
 
   async getVendorById(id: number) {
@@ -42,5 +54,8 @@ export class VendorsService {
     return this.vendors.get(Math.floor(Math.random() * this.vendors.size) + 1);
   }
 
+  getVendors(): Observable<any> {
+    return of(this.vendors);
+  }
 
 }

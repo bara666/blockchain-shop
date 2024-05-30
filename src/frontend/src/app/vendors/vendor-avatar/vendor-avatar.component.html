@@ -5,8 +5,13 @@
     <mat-card-header>
       <img mat-card-avatar class="example-header-image" [src]="vendor.image" />
       <mat-card-title>{{vendor.name}}</mat-card-title>
-      <mat-card-subtitle>{{vendor.wallet}}</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-content>
+      <p class="description">
+         <mat-icon>wallet</mat-icon>
+        <span>{{vendor.wallet}}</span>
+      </p>
+    </mat-card-content>
   </mat-card>
 
 </mat-menu>

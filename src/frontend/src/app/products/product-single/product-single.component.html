@@ -9,7 +9,7 @@
   <img mat-card-lg-image src="{{productComplet.image}}">
   <mat-card-content>
     <p>
-      {{ (productComplet.description.length>100)? (productComplet.description | slice:0:100)+'...':(productComplet.description) }}
+      {{ (productComplet.description?.length>100)? (productComplet.description | slice:0:100)+'...':(productComplet.description) }}
     </p>
   </mat-card-content>
   <mat-card-actions>

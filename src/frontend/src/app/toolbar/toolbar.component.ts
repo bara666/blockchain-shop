@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,7 +11,7 @@ export class ToolbarComponent {
   title = 'blockchain-shop-front-shell';
   user$ = this.auth.user$;
 
-  constructor(@Inject(DOCUMENT) private doc: Document, public auth: AuthService) { }
+  constructor(@Inject(DOCUMENT) private doc: Document, public auth: UserService) { }
   ngOnInit(): void {
 
   }

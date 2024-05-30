@@ -9,7 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { ProductsService } from './services/products.service';
 import { PokemonClient } from 'pokenode-ts';
-import { Vendor, VendorsService } from './services/vendors.service';
+import { VendorsService } from './services/vendors.service';
+import { BlockchainService } from './services/blockchain.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -33,8 +35,10 @@ import { Vendor, VendorsService } from './services/vendors.service';
   ],
   providers: [
     provideAnimationsAsync(),
+    UserService,
     ProductsService,
     VendorsService,
+    BlockchainService,
     PokemonClient
   ],
   bootstrap: [AppComponent]

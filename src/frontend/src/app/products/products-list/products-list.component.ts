@@ -28,9 +28,10 @@ export class ProductsListComponent {
     if (page == null) {
       page = this.page;
     }
-    await this.productosService.getProductsList(page * this.limit, this.limit).then(products => {
-      this.products = products;
-    });
+    await this.productosService.getProductsList(page * this.limit, this.limit)
+      .then(products => {
+        this.products = products;
+      });
   }
 
   toggleGridColumns() {

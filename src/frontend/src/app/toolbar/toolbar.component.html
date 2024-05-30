@@ -7,7 +7,7 @@
     </button>
 
     <span class="mat-body-2 span-monedos" *ngIf="auth.isAuthenticated$ | async">
-      1000 MONEDOS
+      {{auth.balance$ | async}} MONEDOS
     </span>
     <ngx-avatars [matMenuTriggerFor]="userMenu" *ngIf="auth.user$ | async as user" [src]="user.picture"></ngx-avatars>
 
@@ -18,6 +18,10 @@
     <mat-menu #userMenu="matMenu">
       <button mat-menu-item>
         <span>{{(auth.user$ | async)?.name}}</span>
+      </button>
+      <button mat-menu-item class="wallet">
+          <mat-icon>wallet</mat-icon>
+          <span>{{(auth.wallet$ | async)}}</span>
       </button>
       <button mat-menu-item (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
