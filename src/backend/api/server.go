@@ -11,19 +11,20 @@
 package api
 
 import (
-	"net/http"
 	"context"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-	"github.com/swaggo/echo-swagger"
-	log "github.com/sirupsen/logrus"
+	"net/http"
+	"regexp"
+
 	_ "blockchain.com/docs"
 	"github.com/go-playground/validator/v10"
-	"regexp"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	log "github.com/sirupsen/logrus"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 var (
-	validate *validator.Validate
+	validate       *validator.Validate
 	passwordString = "^[a-zA-Z0-9]*|[!@#$%^&*()_+-=[]}|:,./<>?]*$" // Regexp to avoid ; and \t\r\n to mitigate sql injection
 	passwordRegex  = regexp.MustCompile(passwordString)
 	//Create map to the current token to identify session in logs
@@ -35,8 +36,8 @@ func StartBackgroundServer(ctx context.Context) (string, ControlChan, error) {
 		return passwordRegex.MatchString(fl.Field().String())
 	})
 
-	routes:= NewRoute()
-	address:= "0.0.0.0:1323"
+	routes := NewRoute()
+	address := "0.0.0.0:1323"
 
 	done := make(ControlChan)
 	server := &http.Server{
@@ -65,46 +66,61 @@ func StartBackgroundServer(ctx context.Context) (string, ControlChan, error) {
 	return "http://" + address, done, nil
 }
 
+func Cors(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Our middleware logic goes here...
+
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		if r.Method == "OPTIONS" {
+			w.Write([]byte("OK"))
+		} else {
+			next.ServeHTTP(w, r)
+		}
+	})
+}
+
 func NewRoute() *echo.Echo {
 	e := echo.New()
 
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-		LogStatus: true,
-		LogURI:    true,
-		LogMethod: true,
-		LogError:  true,
+		LogStatus:    true,
+		LogURI:       true,
+		LogMethod:    true,
+		LogError:     true,
 		LogRequestID: true,
 		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
 			// FIXME: latency measurement always reports zero
-			if v.URI == "/api/v1/health"{
+			if v.URI == "/api/v1/health" {
 				log.WithFields(log.Fields{
-					"URI":   v.URI,
-					"status": v.Status,
+					"URI":        v.URI,
+					"status":     v.Status,
 					"resquestID": v.RequestID,
-					"Latency": v.Latency.String(),
-					"Method": v.Method,
+					"Latency":    v.Latency.String(),
+					"Method":     v.Method,
 				}).Debug("request")
 			} else if v.Status < 400 && v.Error == nil {
 				log.WithFields(log.Fields{
-					"URI":   v.URI,
-					"status": v.Status,
+					"URI":        v.URI,
+					"status":     v.Status,
 					"resquestID": v.RequestID,
-					"Latency": v.Latency.String(),
-					"Method": v.Method,
+					"Latency":    v.Latency.String(),
+					"Method":     v.Method,
 				}).Info("request")
 			} else {
 				log.WithFields(log.Fields{
-					"URI":   v.URI,
-					"status": v.Status,
+					"URI":        v.URI,
+					"status":     v.Status,
 					"resquestID": v.RequestID,
-					"Latency": v.Latency.String(),
-					"Method": v.Method,
-					"Error": v.Error,
+					"Latency":    v.Latency.String(),
+					"Method":     v.Method,
+					"Error":      v.Error,
 				}).Warn("request")
 			}
 			return nil
 		},
 	}))
+
+	e.Use(middleware.CORS())
 
 	e.GET("/", func(c echo.Context) error {
 		readAllCookies(c)
@@ -117,7 +133,7 @@ func NewRoute() *echo.Echo {
 	e.GET("/api/v1/health", healthCheck)
 	e.GET("/api/v1/getwallets", getWallets)
 	e.POST("/api/v1/getbalance", getBalance)
-        e.POST("/api/v1/sendtransaction", send)
+	e.POST("/api/v1/sendtransaction", send)
 
 	return e
 }
