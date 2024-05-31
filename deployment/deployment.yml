@@ -210,3 +210,31 @@ spec:
             items:
               - key: start-blockchain-node.sh
                 path: start-blockchain-node.sh
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blockchain-frontend
+  labels:
+    app: blockchain-frontend
+spec:
+  selector:
+    matchLabels:
+      app: blockchain-frontend
+  template:
+    metadata:
+      labels:
+        app: blockchain-frontend
+    spec:
+      containers:
+      - name: blockchain-frontend
+        image: blockchain-frontend:0.1
+        resources:
+          limits:
+            cpu: 200m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080
