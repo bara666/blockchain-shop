@@ -26,8 +26,10 @@ docker build -t blockchain-backend:0.1 -f ../src/backend/Dockerfile ../src/backe
 docker build -t blockchain-frontend:0.1 -f ../src/frontend/Dockerfile ../src/frontend/
 kind load --name blockchain-cluster docker-image blockchain-backend:0.1
 kind load --name blockchain-cluster docker-image blockchain-frontend:0.1
+kubectl apply -f nginx-ingress/
 kubectl apply -f start-blockchain-gen.yml
 kubectl apply -f start-blockchain-node.yml
 kubectl apply -f pv-pvc.yml
 kubectl apply -f deployment.yml
 kubectl apply -f service.yml
+kubectl apply -f ingress.yml

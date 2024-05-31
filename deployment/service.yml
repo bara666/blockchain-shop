@@ -5,12 +5,10 @@ metadata:
 spec:
   selector:
     app: blockchain-backend
-  type: NodePort
   ports:
   - protocol: TCP
     port: 1323
     targetPort: 1323
-    nodePort: 30000
     name: api
 ---
 apiVersion: v1
@@ -20,10 +18,8 @@ metadata:
 spec:
   selector:
     app: blockchain-frontend
-  type: NodePort
   ports:
   - protocol: TCP
     port: 8080
     targetPort: 8080
-    nodePort: 30001
     name: http
