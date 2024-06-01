@@ -10,13 +10,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   {
     path: 'microfrontend',
-    //loadChildren: () => import('micro-frontend/Module').then(m => m.AppComponentModule)
-    loadChildren: () => loadRemoteModule({
-      remoteEntry: 'http://localhost:4201/remoteEntry.js',
-      remoteName: 'micro-frontend',
-      exposedModule: './Module'
-    })
-      .then(m => m.AppComponentModule)
+    loadChildren: () => import('micro-frontend/Module').then(m => m.AppComponentModule)
   }
 ];
 

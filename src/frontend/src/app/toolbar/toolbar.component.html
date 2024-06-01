@@ -1,6 +1,16 @@
 <mat-toolbar color="primary" fxFlex fxLayout>
   <mat-toolbar-row fxFlex fxLayoutAlign="flex-end center">
     <span>XhopChain</span>
+    <span class="toolbar-spacer-mini"></span>
+    <button mat-button [routerLink]="'/products'">
+      <mat-icon aria-hidden="false" aria-label="Productos" fontIcon="store"></mat-icon>Products
+    </button>
+
+    <a routerLink="/microfrontend">
+    <button mat-button routerLink="/microfrontend'">
+      <mat-icon aria-hidden="false" aria-label="microfrontend" fontIcon="shopping_cart"></mat-icon>Micro
+    </button>
+    </a>
     <span class="toolbar-spacer"></span>
     <button mat-button *ngIf="!(auth.isAuthenticated$ | async)" (click)="login()">
       <mat-icon aria-hidden="false" aria-label="Log in" fontIcon="login"></mat-icon>Log in

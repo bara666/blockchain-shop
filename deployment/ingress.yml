@@ -21,8 +21,16 @@ spec:
         pathType: ImplementationSpecific
       - backend:
           service:
+            name: blockchain-frontend-micro
+            port:
+              number: 8081
+        path: /mfe/micro-frontend
+        pathType: ImplementationSpecific
+      - backend:
+          service:
             name: blockchain-frontend
             port:
               number: 8080
         path: /
         pathType: ImplementationSpecific
+

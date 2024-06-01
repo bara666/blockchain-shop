@@ -12,6 +12,7 @@ import { PokemonClient } from 'pokenode-ts';
 import { VendorsService } from './services/vendors.service';
 import { BlockchainService } from './services/blockchain.service';
 import { UserService } from './services/user.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { UserService } from './services/user.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     // Import the module into the application, with configuration
     AuthModule.forRoot({
       domain: 'blockchain-app.eu.auth0.com',
