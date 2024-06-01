@@ -3,18 +3,11 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"blockchain-shop-front-shell": {
+		"micro-frontend": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
-					"style": "scss",
-					"standalone": false
-				},
-				"@schematics/angular:directive": {
-					"standalone": false
-				},
-				"@schematics/angular:pipe": {
-					"standalone": false
+					"style": "scss"
 				}
 			},
 			"root": "",
@@ -24,7 +17,7 @@
 				"build": {
 					"builder": "ngx-build-plus:browser",
 					"options": {
-						"outputPath": "dist/blockchain-shop-front-shell",
+						"outputPath": "dist/micro-frontend",
 						"index": "src/index.html",
 						"polyfills": [
 							"zone.js"
@@ -36,7 +29,6 @@
 							"src/assets"
 						],
 						"styles": [
-							"@angular/material/prebuilt-themes/indigo-pink.css",
 							"src/styles.scss"
 						],
 						"scripts": [],
@@ -73,25 +65,26 @@
 					"builder": "ngx-build-plus:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "blockchain-shop-front-shell:build:production",
+							"buildTarget": "micro-frontend:build:production",
 							"extraWebpackConfig": "webpack.prod.config.js"
 						},
 						"development": {
-							"buildTarget": "blockchain-shop-front-shell:build:development",
-							"host": "0.0.0.0"
+							"buildTarget": "micro-frontend:build:development",
+							"host": "0.0.0.0",
+							"port": 4201
 						}
 					},
 					"defaultConfiguration": "development",
 					"options": {
-						"port": 4200,
-						"publicHost": "http://localhost:4200",
+						"port": 4201,
+						"publicHost": "http://localhost:4201",
 						"extraWebpackConfig": "webpack.config.js"
 					}
 				},
 				"extract-i18n": {
 					"builder": "ngx-build-plus:extract-i18n",
 					"options": {
-						"buildTarget": "blockchain-shop-front-shell:build",
+						"buildTarget": "micro-frontend:build",
 						"extraWebpackConfig": "webpack.config.js"
 					}
 				},
@@ -109,7 +102,6 @@
 							"src/assets"
 						],
 						"styles": [
-							"@angular/material/prebuilt-themes/indigo-pink.css",
 							"src/styles.scss"
 						],
 						"scripts": []
@@ -117,8 +109,5 @@
 				}
 			}
 		}
-	},
-	"cli": {
-		"analytics": false
 	}
 }

@@ -27,11 +27,7 @@ export class UserService {
           this.balance$.next(this.balance);
         });
       }
-
     });
-
-
-
   }
 
   loginWithPopup() {
