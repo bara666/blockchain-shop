@@ -238,3 +238,31 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blockchain-frontend-micro
+  labels:
+    app: blockchain-frontend-micro
+spec:
+  selector:
+    matchLabels:
+      app: blockchain-frontend-micro
+  template:
+    metadata:
+      labels:
+        app: blockchain-frontend-micro
+    spec:
+      containers:
+      - name: blockchain-frontend-micro
+        image: blockchain-frontend-micro:0.1
+        resources:
+          limits:
+            cpu: 200m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080

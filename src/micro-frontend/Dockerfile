@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm config list \
-    && npm ci --force \
+    && npm ci --force\
     && npm cache clean --force
 
 FROM base as build
@@ -21,7 +21,7 @@ COPY ./src/ /home/nginx/
 COPY nginx-start.sh /usr/local/bin/nginx-start.sh
 COPY ./nginx.conf /etc/nginx/nginx.conf
 RUN chmod +x /usr/local/bin/nginx-start.sh
-COPY --from=build /usr/src/app/dist/blockchain-shop-front-shell/ /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/micro-frontend/ /usr/share/nginx/html
 RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
         chown -R nginx:nginx /var/cache/nginx && \
         chown -R nginx:nginx /var/log/nginx && \
@@ -30,7 +30,7 @@ RUN touch /var/run/nginx.pid && \
         chown -R nginx:nginx /var/run/nginx.pid
 
 WORKDIR /home/nginx
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["dumb-init", "--"]
 
