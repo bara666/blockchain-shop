@@ -19,7 +19,7 @@ export class BuyComponent {
   ) { }
 
   buy() {
-    console.log('buy', this.data.product);
+    console.log('buy', this.data.product.price, this.data.product);
     this.blockchain.sendTransaction(this.user.wallet, this.data.product.price, this.data.product.vendor.wallet).subscribe((data) => {
       this.user.reloadBalance();
       this.dialogRef.close();

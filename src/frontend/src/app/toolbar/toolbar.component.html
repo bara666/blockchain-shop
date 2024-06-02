@@ -17,10 +17,10 @@
     </button>
 
 
-    <button mat-icon-button (click)="reloadBalance()">
+    <button mat-icon-button (click)="reloadBalance()" *ngIf="auth.isAuthenticated$ | async">
       <mat-icon>sync</mat-icon>
     </button>
-    <span class="mat-body-2 span-monedos" *ngIf="auth.isAuthenticated$ | async">
+    <span class="mat-body-2 span-monedos" *ngIf="auth.isAuthenticated$ | async" [@fieldUpdated]="fieldState">
       {{auth.balance$ | async}} MONEDOS
     </span>
     <ngx-avatars [matMenuTriggerFor]="userMenu" *ngIf="auth.user$ | async as user" [src]="user.picture"></ngx-avatars>

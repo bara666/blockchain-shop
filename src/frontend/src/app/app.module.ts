@@ -19,6 +19,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
+    BrowserAnimationsModule,
     // Import the module into the application, with configuration
     AuthModule.forRoot({
       domain: 'blockchain-app.eu.auth0.com',

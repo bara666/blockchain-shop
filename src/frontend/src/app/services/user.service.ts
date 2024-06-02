@@ -24,12 +24,10 @@ export class UserService {
         this.wallet = user['wallet'];
         this.wallet$.next(this.wallet);
         this.blockchain.getBalance(this.wallet).subscribe((balance) => {
-          this.balance = balance;
-          this.balance$.next(this.balance);
+          this.changeBalance(balance);
         });
         this.pollingService.pollMethod(() => this.blockchain.getBalance(this.wallet), 10000).subscribe((balance) => {
-          this.balance = balance;
-          this.balance$.next(this.balance);
+          this.changeBalance(balance);
         });
       }
     });
@@ -45,9 +43,16 @@ export class UserService {
 
   reloadBalance() {
     this.blockchain.getBalance(this.wallet).subscribe((balance) => {
+      this.changeBalance(balance);
+    });
+  }
+
+  private changeBalance(balance: number) {
+    if (this.balance != balance) {
+      console.log('balance', balance, new Date());
       this.balance = balance;
       this.balance$.next(this.balance);
-    });
+    }
   }
 
 }
