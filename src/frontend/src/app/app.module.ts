@@ -13,15 +13,27 @@ import { VendorsService } from './services/vendors.service';
 import { BlockchainService } from './services/blockchain.service';
 import { UserService } from './services/user.service';
 import { RouterModule } from '@angular/router';
+import { BuyComponent } from './buy/buy.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BuyComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
+    MatGridListModule,
+    MatCardModule,
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule,
     // Import the module into the application, with configuration
     AuthModule.forRoot({
       domain: 'blockchain-app.eu.auth0.com',

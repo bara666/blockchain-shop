@@ -66,19 +66,6 @@ func StartBackgroundServer(ctx context.Context) (string, ControlChan, error) {
 	return "http://" + address, done, nil
 }
 
-func Cors(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Our middleware logic goes here...
-
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		if r.Method == "OPTIONS" {
-			w.Write([]byte("OK"))
-		} else {
-			next.ServeHTTP(w, r)
-		}
-	})
-}
-
 func NewRoute() *echo.Echo {
 	e := echo.New()
 
@@ -120,7 +107,12 @@ func NewRoute() *echo.Echo {
 		},
 	}))
 
-	e.Use(middleware.CORS())
+	// CORS middleware with custom configuration
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodOptions},
+		AllowHeaders: []string{"Content-Type", "Authorization"},
+	}))
 
 	e.GET("/", func(c echo.Context) error {
 		readAllCookies(c)

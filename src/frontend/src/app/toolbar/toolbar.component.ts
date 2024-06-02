@@ -55,4 +55,8 @@ export class ToolbarComponent {
     if (this.clicks > 0)
       this.clicks--;
   }
+
+  reloadBalance(): void {
+    this.auth.reloadBalance();
+  }
 }

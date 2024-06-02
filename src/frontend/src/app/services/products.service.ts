@@ -57,6 +57,7 @@ export class ProductsService {
           category: pokemonExp.types[0].type.name,
           description: pokemonExp.moves.map((item: any) => item.move.name).join(', '),
           vendor: await this.vendorsService.getRandomVendor(),
+          price: Math.floor(Math.random() * 100),
           loaded: true
         });
         this.products.set(product.name, product);

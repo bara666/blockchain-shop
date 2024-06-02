@@ -14,7 +14,7 @@
   </mat-card-content>
   <mat-card-actions>
     <!-- <button mat-button>LIKE</button> -->
-    <button mat-flat-button color="primary"><span></span>40 MONEDOS</button>
+    <button mat-flat-button color="primary" (click)="buyConfirmation(productComplet)"><span></span>{{productComplet.price}} MONEDOS</button>
     <span class="action-spacer"></span>
     <vendor-avatar [vendor]="productComplet.vendor"></vendor-avatar>
   </mat-card-actions>

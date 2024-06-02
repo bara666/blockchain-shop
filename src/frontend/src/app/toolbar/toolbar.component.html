@@ -16,6 +16,10 @@
       <mat-icon aria-hidden="false" aria-label="Log in" fontIcon="login"></mat-icon>Log in
     </button>
 
+
+    <button mat-icon-button (click)="reloadBalance()">
+      <mat-icon>sync</mat-icon>
+    </button>
     <span class="mat-body-2 span-monedos" *ngIf="auth.isAuthenticated$ | async">
       {{auth.balance$ | async}} MONEDOS
     </span>
