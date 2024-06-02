@@ -8,7 +8,7 @@
 
     <a routerLink="/microfrontend">
     <button mat-button routerLink="/microfrontend'">
-      <mat-icon aria-hidden="false" aria-label="microfrontend" fontIcon="shopping_cart"></mat-icon>Micro
+      <mat-icon aria-hidden="false" aria-label="microfrontend" fontIcon="shopping_cart" [matBadge]="clicks" [matBadgeHidden]="clicks <= 0" matBadgeColor="accent"></mat-icon>Micro
     </button>
     </a>
     <span class="toolbar-spacer"></span>

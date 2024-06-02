@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 import { AvatarModule } from 'ngx-avatars';
 import { RouterModule } from '@angular/router';
 
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
     MatToolbarModule,
     MatButton,
     MatIconModule,
+    MatBadgeModule,
     MatMenuModule,
     AvatarModule, RouterModule
   ],
