@@ -20,7 +20,7 @@ data:
         wallet_4000=$(cat /app/tmp/wallets/4000 | tr -d '\n')
         /app/main send -from $wallet_3000 -to $wallet_4000 -amount 1500 -mine
     fi
-    if [ "$NODE_ID" == "4000" ] || [ "$NODE_ID" == "6000" ] || [ "$NODE_ID" == "7000" ] || [ "$NODE_ID" == "8000" ];
+    if [ "$NODE_ID" == "4000" ] || [ "$NODE_ID" == "6000" ] || [ "$NODE_ID" == "7000" ] || [ "$NODE_ID" == "8000" ] || [ "$NODE_ID" == "9000" ] || [ "$NODE_ID" == "10000" ] || [ "$NODE_ID" == "11000" ];
     then
         while true
         do
