@@ -227,7 +227,7 @@ spec:
             cpu: 50m
             memory: 100Mi
         ports:
-        - containerPort: 8000
+        - containerPort: 11000
         volumeMounts:
           - mountPath: /app/tmp
             name: data
