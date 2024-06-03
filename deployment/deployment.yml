@@ -171,6 +171,69 @@ spec:
           - mountPath: /tmp/start-blockchain-node.sh
             subPath: start-blockchain-node.sh
             name: start-blockchain-node
+      - name: blockchain-backend-8000
+        image: blockchain-backend:0.1
+        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 9000"]
+        env:
+          - name: NODE_ID
+            value: "9000"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 9000
+        volumeMounts:
+          - mountPath: /app/tmp
+            name: data
+          - mountPath: /tmp/start-blockchain-node.sh
+            subPath: start-blockchain-node.sh
+            name: start-blockchain-node
+      - name: blockchain-backend-8000
+        image: blockchain-backend:0.1
+        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 10000"]
+        env:
+          - name: NODE_ID
+            value: "10000"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 10000
+        volumeMounts:
+          - mountPath: /app/tmp
+            name: data
+          - mountPath: /tmp/start-blockchain-node.sh
+            subPath: start-blockchain-node.sh
+            name: start-blockchain-node
+      - name: blockchain-backend-8000
+        image: blockchain-backend:0.1
+        command: ["sh", "-c", "/tmp/start-blockchain-node.sh 11000"]
+        env:
+          - name: NODE_ID
+            value: "11000"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - mountPath: /app/tmp
+            name: data
+          - mountPath: /tmp/start-blockchain-node.sh
+            subPath: start-blockchain-node.sh
+            name: start-blockchain-node
       initContainers:
       - image: blockchain-backend:0.1
         command: ["sh", "-c", "/start-blockchain-gen.sh"]
