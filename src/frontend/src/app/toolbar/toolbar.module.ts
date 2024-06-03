@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from './toolbar.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 import { AvatarModule } from 'ngx-avatars';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -17,10 +19,11 @@ import { AvatarModule } from 'ngx-avatars';
     CommonModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    MatButton,
     MatIconModule,
+    MatBadgeModule,
     MatMenuModule,
-    AvatarModule
+    MatButtonModule,
+    AvatarModule, RouterModule
   ],
   exports: [
     ToolbarComponent
