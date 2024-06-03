@@ -24,7 +24,7 @@ This script will create a Kubernetes cluster with 1 master node and 2 worker nod
 
 Once the cluster is up and running, you can access the backend API documentation at:
 
-[http://localhost:30000/swagger/index.html](http://localhost:30000/swagger/index.html)
+[http://localhost:30000/api/swagger/index.html](http://localhost:30000/api/swagger/index.html)
 
 ## Managing the Blockchain
 
