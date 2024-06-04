@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PokemonClient } from 'pokenode-ts';
-import { BehaviorSubject, Observable, forkJoin, map, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Vendor, VendorsService } from './vendors.service';
 
 export interface ProductPartial {
@@ -17,7 +17,6 @@ export class Product implements ProductPartial {
   public vendor!: Vendor;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -33,10 +32,9 @@ export class ProductsService {
     this.vendors$.subscribe(vendors => {
       this.vendors = vendors;
     });
-    let productsAlmacen: any[] = JSON.parse(localStorage.getItem('products') ?? "[]") ?? [];
-    this.products = new Map<string, ProductPartial>(Array.from(productsAlmacen).map((value) => [value.name, value]));
+    let productsArray: any[] = JSON.parse(localStorage.getItem('productsArray') ?? "[]") ?? [];
+    this.products = new Map<string, ProductPartial>(productsArray.map((value) => [value.name, value]));
     this.productsCount$.next(+(localStorage.getItem('productsCount') ?? 0));
-
   }
 
   async getProductsList(offset: number, limit: number) {
@@ -61,18 +59,18 @@ export class ProductsService {
           loaded: true
         });
         this.products.set(product.name, product);
-        localStorage.setItem('products', JSON.stringify(this.products.values()));
+        this.updateLocalStorage();
       });
-
     }
     return this.products.get(name);
   }
-
 
   private async cargaPokemons(offset: number, limit: number) {
     await this.pokemonClient.listPokemons(offset, limit).then(async pokemons => {
       this.productsCount$.next(pokemons.count);
       localStorage.setItem('productsCount', pokemons.count.toString());
+
+      let productsArray: ProductPartial[] = [];
 
       for (let i = 0; i < pokemons.results.length; i++) {
         const pokemon = pokemons.results[i];
@@ -81,9 +79,15 @@ export class ProductsService {
           loaded: false
         } as ProductPartial;
         this.products.set(product.name, product);
+        productsArray.push(product);
       }
-      localStorage.setItem('products', JSON.stringify(this.products.values()));
-    });
 
+      this.updateLocalStorage();
+    });
+  }
+
+  private updateLocalStorage() {
+    const productsArray = Array.from(this.products.values());
+    localStorage.setItem('productsArray', JSON.stringify(productsArray));
   }
 }
